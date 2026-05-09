@@ -1,11 +1,18 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { getWeather } from '../../api'
 import Card from './Card'
+import Sunrise from '../../assets/sunrise.svg?react'
+import Sunset from '../../assets/sunset.svg?react'
+import Cloud from '../../assets/cloud.svg?react'
+import Uv from '../../assets/uv.svg?react'
+import Wind from '../../assets/wind.svg?react'
+import Pressure from '../../assets/pressure.svg?react'
+import UpArrow from '../../assets/uparrow.svg?react'
 
 type Props = {}
 
 export default function AdditionalInfo({}: Props) {
-  const { data, isLoading } = useSuspenseQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ['weather'],
     queryFn: () => getWeather({ lat: 10, lon: 25 }),
   })
@@ -15,9 +22,12 @@ export default function AdditionalInfo({}: Props) {
       title="Additional Weather Info"
       childrenClassName="flex flex-col gap-8"
     >
-      {rows.map(({ label, value }) => (
+      {rows.map(({ label, value, Icon }) => (
         <div className="flex justify-between" key={value}>
-          <span className="text-gray-500">{label}</span>
+          <div className="flex gap-4">
+            <span className="text-gray-500">{label}</span>
+            <Icon className="size-6 invert" />
+          </div>
           <span>
             <FormatComponent value={value} number={data.current[value]} />
           </span>
@@ -36,6 +46,14 @@ function FormatComponent({ value, number }: { value: string; number: number }) {
     })
   }
 
+  if (value === 'wind_deg')
+    return (
+      <UpArrow
+        className="size-6 invert"
+        style={{ transform: `rotate(${number}deg)` }}
+      />
+    )
+
   return number
 }
 
@@ -43,25 +61,31 @@ const rows = [
   {
     label: 'Cloudiness (%)',
     value: 'clouds',
+    Icon: Cloud,
   },
   {
     label: 'UV Index',
     value: 'uvi',
+    Icon: Uv,
   },
   {
     label: 'Wind Direction',
     value: 'wind_deg',
+    Icon: Wind,
   },
   {
     label: 'Pressure (hPa)',
     value: 'pressure',
+    Icon: Pressure,
   },
   {
     label: 'Sunrise',
     value: 'sunrise',
+    Icon: Sunrise,
   },
   {
     label: 'Sunset',
     value: 'sunset',
+    Icon: Sunset,
   },
 ] as const
