@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import Card from './Card'
 import { getWeather } from '../../api'
 
 type Props = {}
 
 export default function DailyForecast({}: Props) {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useSuspenseQuery({
     queryKey: ['weather'],
     queryFn: () => getWeather({ lat: 10, lon: 25 }),
   })
