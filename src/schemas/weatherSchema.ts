@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const WeatherSchema = z.object({
   lat: z.number(),
@@ -29,31 +29,33 @@ export const WeatherSchema = z.object({
       })
     ),
   }),
-  hourly: z.array(
-    z.object({
-      dt: z.number(),
-      temp: z.number(),
-      feels_like: z.number(),
-      pressure: z.number(),
-      humidity: z.number(),
-      dew_point: z.number(),
-      uvi: z.number(),
-      clouds: z.number(),
-      visibility: z.number(),
-      wind_speed: z.number(),
-      wind_deg: z.number(),
-      wind_gust: z.number().optional(),
-      weather: z.array(
-        z.object({
-          id: z.number(),
-          main: z.string(),
-          description: z.string(),
-          icon: z.string(),
-        })
-      ),
-      pop: z.number(),
-    })
-  ).optional(),
+  hourly: z
+    .array(
+      z.object({
+        dt: z.number(),
+        temp: z.number(),
+        feels_like: z.number(),
+        pressure: z.number(),
+        humidity: z.number(),
+        dew_point: z.number(),
+        uvi: z.number(),
+        clouds: z.number(),
+        visibility: z.number(),
+        wind_speed: z.number(),
+        wind_deg: z.number(),
+        wind_gust: z.number().optional(),
+        weather: z.array(
+          z.object({
+            id: z.number(),
+            main: z.string(),
+            description: z.string(),
+            icon: z.string(),
+          })
+        ),
+        pop: z.number(),
+      })
+    )
+    .optional(),
   daily: z.array(
     z.object({
       dt: z.number(),
@@ -97,7 +99,7 @@ export const WeatherSchema = z.object({
       snow: z.number().optional(),
       uvi: z.number(),
     })
-  ).optional(),
-});
+  ),
+})
 
-export type Weather = z.infer<typeof WeatherSchema>;
+export type Weather = z.infer<typeof WeatherSchema>
