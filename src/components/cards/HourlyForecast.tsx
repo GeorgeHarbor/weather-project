@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { getWeather } from '../../api'
 import Card from './Card'
+import WeatherIcon from '../WeatherIcon'
 
 const formatHour = (dt: number): string => {
   const h = new Date(dt * 1000).getHours()
@@ -35,11 +36,7 @@ function HourlyForecast() {
             key={hour.dt}
           >
             <p className="text-center leading-tight">{formatHour(hour.dt)}</p>
-            <img
-              className="size-8"
-              src={`https://openweathermap.org/payload/api/media/file/${hour.weather[0].icon}.png`}
-              alt="Weather Icon"
-            />
+            <WeatherIcon src={hour.weather[0].icon} />
             <p>{Math.round(hour.temp)}°C</p>
           </div>
         ))}
