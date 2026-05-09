@@ -26,10 +26,10 @@ function HourlyForecast() {
       childrenClassName="flex flex-row justify-between gap-12 overflow-auto p-4"
     >
       {data.hourly
-        .filter((hour) => {
-          const d = new Date(hour.dt * 1000)
-          return d >= now || d <= endOfToday
-        })
+        // .filter((hour) => {
+        //  const d = new Date(hour.dt * 1000)
+        //  return d >= now && d <= endOfToday
+        // })
         .map((hour) => (
           <div
             className="flex flex-col justify-between w-9 whitespace-nowrap items-center"
