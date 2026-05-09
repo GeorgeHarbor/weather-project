@@ -1,15 +1,7 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { getWeather } from './api'
-import Card from './components/cards/Card'
 import DailyForecast from './components/cards/DailyForecast'
 import HourlyForecast from './components/cards/HourlyForecast'
 
 function App() {
-  const { data } = useSuspenseQuery({
-    queryKey: ['weather'],
-    queryFn: () => getWeather({ lat: 10, lon: 25 }),
-  })
-
   return (
     <div className="flex flex-col gap-8">
       <Card title="Current Weather">
@@ -22,6 +14,3 @@ function App() {
 }
 
 export default App
-
-// styling Tailwind
-// data fetching - TanStack Quer cky (React query)
