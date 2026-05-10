@@ -8,13 +8,16 @@ import Uv from '../../assets/uv.svg?react'
 import Wind from '../../assets/wind.svg?react'
 import Pressure from '../../assets/pressure.svg?react'
 import UpArrow from '../../assets/uparrow.svg?react'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 type Props = {}
 
 export default function AdditionalInfo({}: Props) {
+  const coords = useSelector((state: RootState) => state.coords)
   const { data } = useSuspenseQuery({
     queryKey: ['weather'],
-    queryFn: () => getWeather({ lat: 10, lon: 25 }),
+    queryFn: () => getWeather({ lat: coords.lat, lon: coords.lon }),
   })
 
   return (
