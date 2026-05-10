@@ -25,7 +25,8 @@ export default function Map({}: Props) {
     <MapContainer
       center={[coords.lat, coords.lon]}
       zoom={5}
-      style={{ width: '700px', height: '500px', cursor: 'pointer' }}
+      style={{}}
+      className="w-screen h-150 grayscale-100 brightness-80"
     >
       <MapClick />
       <TileLayer
@@ -52,6 +53,7 @@ function MapClick() {
   useEffect(() => {
     const handler = (e: LeafletMouseEvent) => {
       const { lat, lng } = e.latlng
+      console.log(lat, lng)
       map.panTo([lat, lng])
       dispatch(setCoords({ lat, lon: lng }))
     }

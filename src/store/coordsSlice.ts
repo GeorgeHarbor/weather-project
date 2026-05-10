@@ -7,7 +7,7 @@ import { Coords } from '../types'
 
 const coordsSlice = createSlice({
   name: 'coords', // prefix for generated action type strings, e.g. "coords/setCoords"
-  initialState: { lat: 10, lon: 25 } as Coords, // default coords before user sets a location
+  initialState: { lat: 43.72110613720002, lon: 20.69202975291744 } as Coords, // default coords before user sets a location
   reducers: {
     // Replaces the entire coords state with the incoming payload
     // _ ignores the previous state since we're doing a full replacement
