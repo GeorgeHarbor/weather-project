@@ -2,13 +2,16 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import Card from './Card'
 import { getWeather } from '../../api'
 import WeatherIcon from '../WeatherIcon'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/store'
 
 type Props = {}
 
 export default function DailyForecast({}: Props) {
+  const coords = useSelector((state: RootState) => state.coords)
   const { data, isLoading } = useSuspenseQuery({
-    queryKey: ['weather'],
-    queryFn: () => getWeather({ lat: 10, lon: 25 }),
+    queryKey: ['weather', coords.lat, coords.lon],
+    queryFn: () => getWeather({ lat: coords.lat, lon: coords.lon }),
   })
 
   if (isLoading || !data) return null
