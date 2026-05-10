@@ -25,8 +25,8 @@ export default function AdditionalInfo({}: Props) {
       {rows.map(({ label, value, Icon }) => (
         <div className="flex justify-between" key={value}>
           <div className="flex gap-4">
-            <span className="text-gray-500">{label}</span>
-            <Icon className="size-6 invert" />
+            <span className="">{label}</span>
+            <Icon className="size-6 invert opacity-50" />
           </div>
           <span>
             <FormatComponent value={value} number={data.current[value]} />
