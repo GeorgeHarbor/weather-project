@@ -38,7 +38,7 @@ export default function CurrentWeather({}: Props) {
             minute: '2-digit',
             hour12: true,
             timeZone: data.timezone,
-          }).format(new Date(data.current.dt))}
+          }).format(new Date(data.current.dt * 1000))}
         </h3>
       </div>
 
