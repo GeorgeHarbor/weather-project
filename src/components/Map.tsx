@@ -27,8 +27,10 @@ export default function Map({}: Props) {
       zoom={5}
       style={{}}
       className="w-screen h-150 grayscale-100 brightness-80"
+      scrollWheelZoom={false}
     >
       <MapClick />
+      <MapCenter />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -36,6 +38,17 @@ export default function Map({}: Props) {
       <Marker position={[coords.lat, coords.lon]} />
     </MapContainer>
   )
+}
+
+function MapCenter() {
+  const map = useMap()
+  const coords = useSelector((state: RootState) => state.coords)
+
+  useEffect(() => {
+    map.setView([coords.lat, coords.lon])
+  }, [coords])
+
+  return null
 }
 
 function MapClick() {
