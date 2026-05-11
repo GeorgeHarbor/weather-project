@@ -3,10 +3,12 @@ import HourlyForecast from './components/cards/HourlyForecast'
 import CurrentWeather from './components/cards/CurrentWeather'
 import AdditionalInfo from './components/cards/AdditionalInfo'
 import Map from './components/Map'
+import LocationDropdown from './components/dropdowns/LocationDropdown'
 
 function App() {
   return (
     <div className="flex flex-col gap-8">
+      <LocationDropdown />
       <Map />
       <CurrentWeather />
       <HourlyForecast />
