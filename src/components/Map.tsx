@@ -4,11 +4,15 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store/store'
 import { setCoords } from '../store/coordsSlice'
+import { setCity } from '../store/citySlice.ts'
 import { LeafletMouseEvent } from 'leaflet'
 import L from 'leaflet'
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
+import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+
+const API_KEY = import.meta.env.VITE_API_KEY
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 
@@ -17,26 +21,31 @@ L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
   shadowUrl: markerShadow,
 })
-type Props = {}
+type Props = {
+  mapType: string
+}
 
-export default function Map({}: Props) {
+export default function Map({ mapType }: Props) {
   const coords = useSelector((state: RootState) => state.coords)
   return (
-    <MapContainer
-      center={[coords.lat, coords.lon]}
-      zoom={5}
-      style={{}}
-      className="w-screen h-150 grayscale-100 brightness-80"
-      scrollWheelZoom={false}
-    >
-      <MapClick />
-      <MapCenter />
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[coords.lat, coords.lon]} />
-    </MapContainer>
+    <div className="relative z-0">
+      <MapContainer
+        center={[coords.lat, coords.lon]}
+        zoom={5}
+        style={{}}
+        className="w-screen h-150 "
+        scrollWheelZoom={true}
+      >
+        <MapClick />
+        <MapCenter />
+        <MapTileLayer />
+        <TileLayer
+          opacity={0.5}
+          url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
+        />
+        <Marker position={[coords.lat, coords.lon]} />
+      </MapContainer>
+    </div>
   )
 }
 
@@ -55,19 +64,10 @@ function MapClick() {
   const map = useMap()
   const dispatch = useDispatch<AppDispatch>()
 
-  // useEffect is required here for two reasons:
-  // 1. map.on('click', handler) is a side effect — it registers a listener on an
-  //    external Leaflet instance, not on React's virtual DOM. Without useEffect,
-  //    this would run on every render and stack duplicate listeners.
-  // 2. The cleanup function (map.off) removes the listener when the component
-  //    unmounts or before the effect re-runs, preventing memory leaks.
-  // The dependency array [map, dispatch] ensures the listener is only re-registered
-  // if the map instance or dispatch function changes.
   useEffect(() => {
     const handler = (e: LeafletMouseEvent) => {
       const { lat, lng } = e.latlng
-      console.log(lat, lng)
-      map.panTo([lat, lng])
+      dispatch(setCity('custom'))
       dispatch(setCoords({ lat, lon: lng }))
     }
 
@@ -76,6 +76,24 @@ function MapClick() {
       map.off('click', handler)
     }
   }, [map, dispatch])
+
+  return null
+}
+function MapTileLayer() {
+  const map = useMap()
+
+  useEffect(() => {
+    const tileLayer = new MaptilerLayer({
+      style: 'basic-dark',
+      apiKey: 'liuhkzYf1It8U1NRBteR',
+    })
+
+    tileLayer.addTo(map)
+
+    return () => {
+      map.removeLayer(tileLayer)
+    }
+  }, [map])
 
   return null
 }

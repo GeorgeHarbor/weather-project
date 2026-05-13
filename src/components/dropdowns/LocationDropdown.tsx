@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   SelectTrigger,
   SelectValue,
@@ -7,35 +7,44 @@ import {
   SelectItem,
   Select,
 } from '../ui/select'
-import { AppDispatch } from '@/store/store'
+import { AppDispatch, RootState } from '@/store/store'
 import { setCoords } from '@/store/coordsSlice'
 import { getCoords } from '@/api'
 import { useQuery } from '@tanstack/react-query'
-import { useState, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { setCity } from '../../store/citySlice.ts'
 
 type Props = {}
 
 export default function LocationDropdown({}: Props) {
   const dispatch = useDispatch<AppDispatch>()
-  const [city, setCity] = useState('Kraljevo')
+  // const [city, setCity] = useState('Kraljevo')
+  const city = useSelector((state: RootState) => state.city)
 
   const { data } = useQuery({
     queryKey: ['city', city],
     queryFn: () => getCoords(city),
+    enabled: city !== 'custom',
   })
 
+  const lastDispatchedCity = useRef<string | null>(null)
   useEffect(() => {
-    if (data?.[0]) {
+    if (city === 'custom') {
+      lastDispatchedCity.current = 'custom'
+      return
+    }
+    if (data?.[0] && city !== lastDispatchedCity.current) {
+      lastDispatchedCity.current = city
       dispatch(setCoords({ lat: data[0].lat, lon: data[0].lon }))
     }
-  }, [data])
+  }, [data, city])
 
   return (
-    <Select onValueChange={setCity}>
+    <Select value={city} onValueChange={(value) => dispatch(setCity(value))}>
       <SelectTrigger className="w-45">
-        <SelectValue placeholder="Location" />
+        {city === 'custom' ? <span>Custom</span> : <SelectValue placeholder="Location" />}
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent position="popper">
         <SelectGroup>
           {locations.map((location) => (
             <SelectItem key={location} value={location}>
