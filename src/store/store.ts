@@ -1,11 +1,12 @@
 // configureStore creates the Redux store and combines all reducers
 import { configureStore } from '@reduxjs/toolkit'
 import coordsReducer from './coordsSlice.ts'
+import cityReducer from './citySlice.ts'
 
 // The store holds the entire application state tree
 // Each key in reducer becomes a top-level key in state, e.g. state.coords
 export const store = configureStore({
-  reducer: { coords: coordsReducer },
+  reducer: { coords: coordsReducer, city: cityReducer },
 })
 
 // RootState is the type of the full state tree — use this when typing useSelector
