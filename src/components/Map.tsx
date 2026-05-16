@@ -33,7 +33,7 @@ export default function Map({ mapType }: Props) {
         center={[coords.lat, coords.lon]}
         zoom={5}
         style={{}}
-        className="w-screen h-150 "
+        className="w-full h-150"
         scrollWheelZoom={true}
       >
         <MapClick />

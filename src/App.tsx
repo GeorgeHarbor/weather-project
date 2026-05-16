@@ -5,7 +5,12 @@ import AdditionalInfo from './components/cards/AdditionalInfo'
 import Map from './components/Map'
 import LocationDropdown from './components/dropdowns/LocationDropdown'
 import MapTypeDropdown from './components/dropdowns/MapTypeDropdown'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
+import MapLegend from './components/MapLegend'
+import CurrentSkeleton from './components/skeletons/CurrentSkeleton'
+import HourlySkeleton from './components/skeletons/HourlySkeleton'
+import DailySkeleton from './components/skeletons/DailySkeleton'
+import AdditionalInfoSkeleton from './components/skeletons/AdditionalInfoSkeleton'
 
 function App() {
   const [mapType, setMapType] = useState('clouds_new')
@@ -21,11 +26,22 @@ function App() {
           <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
         </div>
       </div>
-      <Map mapType={mapType} />
-      <CurrentWeather />
-      <HourlyForecast />
-      <DailyForecast />
-      <AdditionalInfo />
+      <div className="relative">
+        <MapLegend mapType={mapType}></MapLegend>
+        <Map mapType={mapType} />
+      </div>
+      <Suspense fallback={<CurrentSkeleton />}>
+        <CurrentWeather />
+      </Suspense>
+      <Suspense fallback={<HourlySkeleton />}>
+        <HourlyForecast />
+      </Suspense>
+      <Suspense fallback={<DailySkeleton />}>
+        <DailyForecast />
+      </Suspense>
+      <Suspense fallback={<AdditionalInfoSkeleton />}>
+        <AdditionalInfo />
+      </Suspense>
     </div>
   )
 }
