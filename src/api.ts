@@ -1,5 +1,6 @@
 import { WeatherSchema } from './schemas/weatherSchema'
 import { LocationSchema } from './schemas/locationSchema.ts'
+import { AirQualitySchema } from './schemas/airQualitySchema.ts'
 
 const API_KEY = import.meta.env.VITE_API_KEY
 
@@ -18,4 +19,18 @@ export async function getCoords(city: string) {
   )
   const data = await res.json()
   return LocationSchema.parse(data)
+}
+
+export async function getAirPolution({
+  lat,
+  lon,
+}: {
+  lat: number
+  lon: number
+}) {
+  const res = await fetch(
+    `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+  )
+  const data = await res.json()
+  return AirQualitySchema.parse(data)
 }
