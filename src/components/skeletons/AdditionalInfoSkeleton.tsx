@@ -1,9 +1,7 @@
 import Card from '../cards/Card'
 import { Skeleton } from '../ui/skeleton'
 
-type Props = {}
-
-const AdditionalInfoSkeleton = (props: Props) => {
+const AdditionalInfoSkeleton = () => {
   return (
     <Card
       title="Additional Weather Info"
