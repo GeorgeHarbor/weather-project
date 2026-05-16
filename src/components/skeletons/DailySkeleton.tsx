@@ -7,7 +7,7 @@ const DailySkeleton = () => {
       {Array.from({ length: 12 }).map(() => (
         <div className="flex justify-between">
           <Skeleton className="w-9 h-6" />
-          <Skeleton className="w-9 h-6 rounded-full"></Skeleton>
+          <Skeleton className="w-6 h-6 rounded-full"></Skeleton>
           <Skeleton className="w-9 h-6" />
           <Skeleton className="w-9 h-6" />
           <Skeleton className="w-9 h-6" />
