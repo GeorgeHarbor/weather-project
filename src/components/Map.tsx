@@ -13,6 +13,7 @@ import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 
 const API_KEY = import.meta.env.VITE_API_KEY
+const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 
@@ -85,7 +86,7 @@ function MapTileLayer() {
   useEffect(() => {
     const tileLayer = new MaptilerLayer({
       style: 'basic-dark',
-      apiKey: 'REDACTED',
+      apiKey: MAPTILER_KEY,
     })
 
     tileLayer.addTo(map)
