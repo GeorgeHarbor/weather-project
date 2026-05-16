@@ -9,6 +9,7 @@ type Props = {}
 
 export default function CurrentWeather({}: Props) {
   const coords = useSelector((state: RootState) => state.coords)
+
   const { data, isLoading } = useSuspenseQuery({
     queryKey: ['weather', coords.lat, coords.lon],
     queryFn: () => getWeather({ lat: coords.lat, lon: coords.lon }),
