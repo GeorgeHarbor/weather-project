@@ -35,12 +35,14 @@ function HourlyForecast() {
         // })
         .map((hour) => (
           <div
-            className="flex flex-col justify-between w-9 whitespace-nowrap items-center"
+            className="flex flex-col justify-between w-9 whitespace-nowrap items-center 2xl:justify-between"
             key={hour.dt}
           >
-            <p className="text-center leading-tight">{formatHour(hour.dt)}</p>
-            <WeatherIcon src={hour.weather[0].icon} />
-            <p>{Math.round(hour.temp)}°C</p>
+            <p className="text-center leading-tight 2xl:scale-110">
+              {formatHour(hour.dt)}
+            </p>
+            <WeatherIcon className="2xl:scale-250" src={hour.weather[0].icon} />
+            <p className="2xl:scale-110">{Math.round(hour.temp)}°C</p>
           </div>
         ))}
     </Card>
