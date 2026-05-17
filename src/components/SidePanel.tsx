@@ -28,13 +28,13 @@ export default function SidePanel(props: Props) {
         <ChevronLeft className="size-8 cursor-pointer -ml-2 lg:hidden" />
       </button>
       <Suspense fallback={<AirPollutionSkeleton />}>
-        <AirPollution {...props} />
+        <AirPollution />
       </Suspense>
     </div>
   )
 }
 
-function AirPollution(props: Props) {
+function AirPollution() {
   const coords = useSelector((state: RootState) => state.coords)
   const { data } = useSuspenseQuery({
     queryKey: ['polution', coords.lon, coords.lat],
