@@ -21,7 +21,7 @@ export async function getCoords(city: string) {
   return LocationSchema.parse(data)
 }
 
-export async function getAirPolution({
+export async function getAirPollution({
   lat,
   lon,
 }: {
