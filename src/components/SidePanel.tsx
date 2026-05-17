@@ -1,31 +1,47 @@
 import { getAirPollution } from '@/api'
 import { RootState } from '@/store/store'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Suspense } from 'react'
+import { Dispatch, SetStateAction, Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import Card from './cards/Card'
 import InfoTooltip from './InfoTooltip'
 import PollutantCard from './PollutantCard'
 import { Skeleton } from './ui/skeleton'
+import clsx from 'clsx'
+import { ChevronLeft } from 'lucide-react'
 
-export default function SidePanel() {
+type Props = {
+  isSidePanelOpen: boolean
+  setIsSidePanelOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export default function SidePanel(props: Props) {
+  const { isSidePanelOpen, setIsSidePanelOpen } = props
   return (
-    <div className="fixed top-0 right-0 h-screen w-90 shadow-md bg-sidebar z-1 py-8 px-4 overflow-y-scroll flex gap-8">
+    <div
+      className={clsx(
+        'fixed top-0 right-0 h-screen  shadow-md bg-sidebar z-1 py-8 px-4 overflow-y-scroll flex flex-col gap-8 transition-transform duration-300 w-auto',
+        isSidePanelOpen ? 'translate-x-0' : 'translate-x-full'
+      )}
+    >
+      <button onClick={() => setIsSidePanelOpen(false)}>
+        <ChevronLeft className="size-8 cursor-pointer -ml-2" />
+      </button>
       <Suspense fallback={<AirPollutionSkeleton />}>
-        <AirPollution />
+        <AirPollution {...props} />
       </Suspense>
     </div>
   )
 }
 
-function AirPollution() {
+function AirPollution(props: Props) {
   const coords = useSelector((state: RootState) => state.coords)
   const { data } = useSuspenseQuery({
     queryKey: ['polution', coords.lon, coords.lat],
     queryFn: () => getAirPollution(coords),
   })
   return (
-    <div className="flex flex-col gap-4 w-90">
+    <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold">Air Pollution</h1>
       <h1 className="text-5xl font-semibold">{data.list[0].main.aqi}</h1>
       <div className="flex items-start gap-2">
