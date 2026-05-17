@@ -15,7 +15,7 @@ export async function getWeather({ lat, lon }: { lat: number; lon: number }) {
 
 export async function getCoords(city: string) {
   const res = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${API_KEY}`
+    `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${API_KEY}`
   )
   const data = await res.json()
   return LocationSchema.parse(data)
@@ -29,7 +29,7 @@ export async function getAirPollution({
   lon: number
 }) {
   const res = await fetch(
-    `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
   )
   const data = await res.json()
   return AirQualitySchema.parse(data)
