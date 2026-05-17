@@ -43,7 +43,9 @@ function App() {
         <Suspense fallback={<HourlySkeleton />}>
           <HourlyForecast />
         </Suspense>
-        <Suspense fallback={<DailySkeleton />}></Suspense>
+        <Suspense fallback={<DailySkeleton />}>
+          <DailyForecast />
+        </Suspense>
         <Suspense fallback={<AdditionalInfoSkeleton />}>
           <AdditionalInfo />
         </Suspense>
