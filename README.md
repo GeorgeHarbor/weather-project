@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# Weather Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A weather dashboard built with React, TypeScript, and Vite. Displays current conditions, forecasts, air quality data, and an interactive map — all driven by the OpenWeatherMap API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Current weather** — temperature, humidity, wind, UV index, and more
+- **Hourly & daily forecasts** — scrollable cards with weather icons
+- **Air quality / AQI panel** — per-pollutant breakdown (SO₂, NO₂, PM10, PM2.5, O₃, CO, NO, NH₃) with color-coded quality levels
+- **Interactive map** — MapTiler + Leaflet with switchable map layers (Clouds, Wind, Precipitation, Temperature, Pressure)
+- **Location search** — look up any city by name
+- **Loading skeletons** — full skeleton UI while data fetches, with fade-in animation
+- **Responsive side panel** — slide-in AQI panel with toggle button
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Area | Library |
+|------|---------|
+| Framework | React 19 + TypeScript |
+| Build | Vite |
+| Styling | Tailwind CSS v4 |
+| UI primitives | Radix UI + shadcn |
+| State | Redux Toolkit |
+| Data fetching | TanStack Query (Suspense mode) |
+| Map | Leaflet + MapTiler SDK |
+| Validation | Zod |
+| Icons | Lucide React |
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clone the repo and install dependencies:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Create a `.env` file in the project root:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```env
+VITE_API_KEY=your_openweathermap_api_key
+VITE_MAPTILER_API_KEY=your_maptiler_api_key
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Start the dev server:
+
+```bash
+npm run dev
+```
+
+## API Keys
+
+- **OpenWeatherMap** — used for weather, forecast, geocoding, and air pollution data. Requires a [One Call API 3.0](https://openweathermap.org/api/one-call-3) subscription.
+- **MapTiler** — used for the map tiles and layer overlays.
+
+## Scripts
+
+```bash
+npm run dev       # Start dev server
+npm run build     # Type-check and build for production
+npm run preview   # Preview production build
+npm run lint      # Run ESLint
 ```

@@ -29,12 +29,11 @@ type Props = {
 export default function Map({ mapType }: Props) {
   const coords = useSelector((state: RootState) => state.coords)
   return (
-    <div className="relative z-0">
+    <div className="relative z-0 h-96 2xl:h-full">
       <MapContainer
         center={[coords.lat, coords.lon]}
         zoom={5}
-        style={{}}
-        className="w-full h-150"
+        style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={true}
       >
         <MapClick />
