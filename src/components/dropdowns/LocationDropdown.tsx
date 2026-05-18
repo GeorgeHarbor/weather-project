@@ -41,8 +41,12 @@ export default function LocationDropdown({}: Props) {
 
   return (
     <Select value={city} onValueChange={(value) => dispatch(setCity(value))}>
-      <SelectTrigger className="w-45">
-        {city === 'custom' ? <span>Custom</span> : <SelectValue placeholder="Location" />}
+      <SelectTrigger className="w-full xs:w-45">
+        {city === 'custom' ? (
+          <span>Custom</span>
+        ) : (
+          <SelectValue placeholder="Location" />
+        )}
       </SelectTrigger>
       <SelectContent position="popper">
         <SelectGroup>

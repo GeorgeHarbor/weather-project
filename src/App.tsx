@@ -19,20 +19,22 @@ function App() {
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false)
   return (
     <>
-      <div className="flex flex-col gap-8 p-8 w-full lg:w-[calc(100dvw-var(--sidebar-width))] 2xl:h-screen">
+      <div className="flex flex-col gap-8 p-8 w-full lg:w-[calc(100dvw-var(--sidebar-width))] 2xl:min-h-280 2xl:h-screen">
         <div className="flex flex-wrap items-start gap-4">
-          <div className="flex flex-wrap items-center gap-4 flex-1 min-w-0">
-            <div className="flex items-center gap-4">
-              <h1 className="text-xl font-semibold">Location: </h1>
+          <div className="flex flex-wrap s:flex-nowrap items-center gap-4 flex-1 min-w-0">
+            <div className="flex flex-col xs:flex-row w-full  gap-1 xs:gap-4">
+              <h1 className="text-xl font-semibold w-25">Location:</h1>
               <LocationDropdown />
             </div>
-            <div className="flex items-center gap-4">
-              <h1 className="text-xl font-semibold">Map Type: </h1>
+            <div className="flex flex-col w-full xs:flex-row xs:items-center gap-1 xs:gap-4">
+              <h1 className="text-xl font-semibold whitespace-nowrap w-25">
+                Map Type:
+              </h1>
               <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
             </div>
           </div>
           <button className="shrink-0" onClick={() => setIsSidePanelOpen(true)}>
-            <Hamburger className="size-8 cursor-pointer invert lg:hidden" />
+            <Hamburger className="size-6 cursor-pointer invert lg:hidden" />
           </button>
         </div>
 
