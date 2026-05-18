@@ -100,6 +100,8 @@
 }
 
 @theme inline {
+  --breakpoint-xs: 500px;
+  --breakpoint-s: 700px;
   --font-heading: var(--font-sans);
   --font-sans: 'Inter Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
